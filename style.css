@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  /* padding: 0; PADDING INTERFERES W LIST STYLE ITEM*/
+  box-sizing: border-box;
+}
+
+@media screen and (min-width:780px) {
+  ul {
+    text-align: center;
+  }
+
+  li {
+    display: inline-block;
+    background-color: #666;
+    color: #fff;
+  }
+
+  /* .container {
+    width: 300px;
+    margin: auto;
+  } */
+}
+
+.blue {
+  margin-top: 20px;
+  width: 300px;
+  height: 100px;
+  background-color: blue;
+  position: relative;
+}
+
+.green {
+  width: 200px;
+  height: 100px;
+  padding-top: 5px;
+  padding-left: 10px;
+  background-color: green;
+  position: absolute;
+  right: 0;
+  opacity: 0;
+}
+
+.red {
+  width: 90px;
+  height: 90px;
+  background-color: red;
+  display: inline-block;
+  opacity: 0;
+}
+
+@media screen and (min-width:780px) {
+  .green, .red {
+    opacity: 1;
+  }
