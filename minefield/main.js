@@ -23,7 +23,10 @@ $('.mine-box').click(function() {
     $('.mine-box').eq(itemNr).addClass('active-mine');
     setTimeout(function() {
       $('.overlay').show();
-      $('.result-box #lose').show();
+      $('#lose').show();
+      $('#lose button').click(function() {
+    location.reload();
+      });
     }, 0050);
   } else {
     $('.mine-box').eq(itemNr).addClass('safe');

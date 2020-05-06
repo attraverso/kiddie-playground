@@ -17,8 +17,8 @@
   align-items: center;
 }
 
-#field,
-.mine-box {
+.mine-box,
+#field {
   background-color: #bdbdbd;
   border: 2px outset #f2f2f2;
 }
@@ -47,8 +47,8 @@
 }
 
 .safe {
-  background-image: url('https://p1.hiclipart.com/preview/850/549/117/glass-layer-styles-psd-icons-check-mark-copy-black-check-icon-png-clipart.jpg');
-  background-size: contain;
+  background-color: #bdbdbd;
+  border: 2px solid #7b7b7b;
 }
 
 #field {
@@ -59,6 +59,15 @@
   display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+#lose {
+  text-align: center;
+}
+
+#lose button {
+  margin-top: 20px;
+  padding: 5px;
 }
 
 #lose,
