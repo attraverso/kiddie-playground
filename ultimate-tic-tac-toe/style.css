@@ -4,19 +4,67 @@
   box-sizing: border-box;
 }
 
+button {
+  padding: 5px;
+  margin: 20px;
+}
+
+/* .blue {
+  background-color: #00f;
+} */
+
+.box {
+  width: 33%;
+  height: 33%;
+  background-color: #ccc;
+  border: 1px solid #666;
+}
+
+.blue {
+  background-color: #00f;
+}
+
+.gridbox {
+  width: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.player1 {
+  color: #00f;
+}
+.player2 {
+  color: #f00;
+}
+
+.red {
+  background-color: #f00;
+}
+
+#container {
+  width: 70%;
+  margin: 100px auto;
+  display: flex;
+    justify-content: space-around;
+}
+
 #game {
   width: 470px;
   height: 470px;
   padding: 10px;
-  margin: 100px auto;
-  background-color: purple;
+  background-color: #999;
   display: flex;
-  flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
-.box {
-  width: 50px;
-  height: 50px;
-  background-color: blue;
-  border: 1px solid lightcoral;
+#options {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
