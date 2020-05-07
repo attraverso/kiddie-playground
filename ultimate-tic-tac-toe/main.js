@@ -3,7 +3,7 @@
 /*STEP generate game field via jQuery*/
 /*generate outer grid*/
 for (var i = 0; i < 9; i++) {
-  $('#game').append('<div class="gridbox"></div>');
+  $('#game').append('<div class="gridbox"><div class="overlay gray-overlay"></div></div>');
 };
  /*generate innner grids*/
 for (var i = 0; i < 9; i++) {
@@ -12,24 +12,37 @@ for (var i = 0; i < 9; i++) {
 
 /*STEP apply color by player*/
 
+/*clicking on player1 gives class current to player 1 and removes it from player 2*/
 $('.player1').click(function() {
   $('button').removeClass('current');
   $(this).addClass('current');
 });
 
+/*clicking on player2 gives class current to player 2 and removes it from player 1*/
 $('.player2').click(function() {
   $('button').removeClass('current');
   $(this).addClass('current');
 });
 
+/*when clicking on whichever cell*/
 $('.box').click(function() {
+  /*if player1 is active, the cell becomes blue*/
   if ($('.player1').hasClass('current')) {
     $(this).addClass('blue');
+    /*if player1 is active, the cell becomes red*/
   } else if ($('.player2').hasClass('current')) {
     $(this).addClass('red');
   }
+  /*gather the cell's index inside the inner grid*/
+  var boxIndex = $(this).index();
+  console.log(boxIndex);
+  $('.overlay').show();
+  $('.overlay').eq(boxIndex - 1).hide();
 });
 
+//make it so that one can't overwrite the other
+
+//make it so that when you pick a box, the only playable gridbox is the one corresponding
 
 
 
