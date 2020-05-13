@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #3c3c3c;
+}
+
+button {
+  padding: 5px;
+  margin: 20px;
+}
+
+/* .blue {
+  background-color: #00f;
+} */
+
+.cell {
+  width: 33%;
+  height: 33%;
+  background-color: #ccc;
+  border: 1px solid #666;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blue {
+  background-color: #00f;
+}
+
+.gray-overlay {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.box {
+  width: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  position: relative;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.blue-overlay {
+  background-color: rgba(0,0,255,0.3);
+}
+
+.overlay {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+/*STARTSMALL.JS PROPERTIES*/
+.game-overlay {
+  width: 450px;
+  height: 450px;
+  position: absolute;
+  top: 10;
+  left: 10;
+  z-index: 11;
+  display: none;
+}
+
+/* .green-overlay {
+  background-color: rgba(0,255,0,0.2);
+} */
+
+/*END STARTSMALL.JS PROPERTIES*/
+
+.player1 {
+  color: #00f;
+}
+.player2 {
+  color: #f00;
+}
+
+.red {
+  background-color: #f00;
+}
+
+.red-overlay {
+  background-color: rgba(255,0,0,0.3);
+}
+
+#container {
+  width: 70%;
+  margin: 100px auto;
+  display: flex;
+    justify-content: space-around;
+}
+
+#game {
+  width: 470px;
+  height: 470px;
+  padding: 10px;
+  background-color: #999;
+  display: flex;
+    flex-wrap: wrap;
+    position: relative; /***DELETE***/
+}
+
+#options {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#winner {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: yellow;
+  z-index: 12;
+}
