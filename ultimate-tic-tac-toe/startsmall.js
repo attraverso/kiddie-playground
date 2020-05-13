@@ -30,6 +30,7 @@ var blue6 = [];
 var blue7 = [];
 var blue8 = [];
 var blue9 = [];
+var blueGlobal = [];
 var red1 = [];
 var red2 = [];
 var red3 = [];
@@ -39,6 +40,7 @@ var red6 = [];
 var red7 = [];
 var red8 = [];
 var red9 = [];
+var redGlobal = [];
 var blueWins;
 var redWins;
 
@@ -58,11 +60,11 @@ $('.cell').click(function() {
 
     /*grab current cell index*/
     var cellIndex = $(this).index();
-    console.log('cell index: ' + cellIndex);
+    // console.log('cell index: ' + cellIndex);
 
     /*grab current box index*/
     var boxIndex = $(this).parent().index();
-    console.log('box index: ' + (boxIndex));
+    // console.log('box index: ' + (boxIndex));
 
     /*if player1 is active, the current cell becomes blue*/
     if ($('.player1').hasClass('current')) {
@@ -77,6 +79,15 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
             /*announce winner*/
             console.log('blue wins');
           }
@@ -90,6 +101,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -103,6 +124,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -116,6 +147,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -129,6 +170,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -142,6 +193,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -155,6 +216,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -168,6 +239,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -181,6 +262,16 @@ $('.cell').click(function() {
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            blueGlobal.push(boxIndex - 1);
+            blueWins = isBlueWinner(blueGlobal);
+            if (blueWins == true) {
+              console.log('BLUE WINS GLOBAL');
+              $('.game-overlay').addClass('blue-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('blue wins');
           }
@@ -206,6 +297,17 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 1 wins').show();
+              $('#winner').show();
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -219,6 +321,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -232,6 +346,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -245,6 +371,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -258,6 +396,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -271,6 +421,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex - 1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -284,6 +446,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex -1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -297,6 +471,18 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex -1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
           }
@@ -310,8 +496,21 @@ $('.cell').click(function() {
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            redGlobal.push(boxIndex -1);
+            console.log(redGlobal);
+            redWins = isRedWinner(redGlobal);
+            if (redWins == true) {
+              console.log('RED WINS GLOBAL');
+              $('.game-overlay').addClass('red-overlay').show();
+              /*announce winner*/
+              $('#winner h1').text('Player 2 wins').show();
+              $('#winner').show();
+
+            }
+
             /*announce winner*/
             console.log('red wins');
+
           }
         }
       }
@@ -341,11 +540,12 @@ $('.cell').click(function() {
     // }
   }
 
-  /*make it so that when you pick a box, the only playable gridbox for the next move is the one matching the box's index*/
   var cellIndex = $(this).index();
+  /*if the cell you play redirects to a box that was already won, all boxes still up for grabs become playable*/
   if ($('.overlay').eq(cellIndex -1).hasClass('blue-overlay')||$('.overlay').eq(cellIndex -1).hasClass('red-overlay')) {
     $('.overlay.gray-overlay:not(.blue-overlay):not(.red-overlay)').hide();
   } else {
+    /*make it so that when you pick a box, the only playable gridbox for the next move is the one matching the box's index*/
     $('.overlay').show();
     $('.overlay').eq(cellIndex - 1).hide();
   }
