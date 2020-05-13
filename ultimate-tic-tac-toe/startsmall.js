@@ -42,12 +42,17 @@ var red9 = [];
 var blueWins;
 var redWins;
 
+// if(($(this).siblings('.overlay').hasClass('blue-overlay'))||($(this).siblings('.overlay').hasClass('red-overlay'))) {
+//      alert('This box was already won!')
+
 /*when clicking on whichever cell*/
 $('.cell').click(function() {
-  /*if the cell has already been claimed*/ /***CONDIZIONE SE IL BOX E' GIA' VINTO?? aggiungo classe in caso di vincita? selettore overlay?***/
-  if($(this).hasClass('blue')||$(this).hasClass('red')) {
+
+  /*if the cell has already been claimed*/
+  if ($(this).hasClass('blue')||$(this).hasClass('red')){
     /*display alert*/
     alert('Someone has already claimed this cell!');
+
     /*otherwise*/
   } else {
 
@@ -66,6 +71,19 @@ $('.cell').click(function() {
       if (boxIndex == 2) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue1.includes(cellIndex)) {
+          blue1.push(cellIndex);
+          /*check whether this move wins the box*/
+          blueWins = isBlueWinner(blue1);
+          if (blueWins == true) {
+            /*block box with blue overlay*/
+            $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+            /*announce winner*/
+            console.log('blue wins');
+          }
+        }
+      } else if (boxIndex == 3) {
+        /*when not already present, add cell number to blue cells array*/
+        if (!blue2.includes(cellIndex)) {
           blue2.push(cellIndex);
           /*check whether this move wins the box*/
           blueWins = isBlueWinner(blue2);
@@ -76,7 +94,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 3) {
+      } else if (boxIndex == 4) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue3.includes(cellIndex)) {
           blue3.push(cellIndex);
@@ -89,7 +107,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 4) {
+      } else if (boxIndex == 5) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue4.includes(cellIndex)) {
           blue4.push(cellIndex);
@@ -102,7 +120,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 5) {
+      } else if (boxIndex == 6) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue5.includes(cellIndex)) {
           blue5.push(cellIndex);
@@ -115,7 +133,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 6) {
+      } else if (boxIndex == 7) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue6.includes(cellIndex)) {
           blue6.push(cellIndex);
@@ -128,7 +146,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 7) {
+      } else if (boxIndex == 8) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue7.includes(cellIndex)) {
           blue7.push(cellIndex);
@@ -141,7 +159,7 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 8) {
+      } else if (boxIndex == 9) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue8.includes(cellIndex)) {
           blue8.push(cellIndex);
@@ -154,25 +172,12 @@ $('.cell').click(function() {
             console.log('blue wins');
           }
         }
-      } else if (boxIndex == 9) {
+      } else if (boxIndex == 10) {
         /*when not already present, add cell number to blue cells array*/
         if (!blue9.includes(cellIndex)) {
           blue9.push(cellIndex);
           /*check whether this move wins the box*/
           blueWins = isBlueWinner(blue9);
-          if (blueWins == true) {
-            /*block box with blue overlay*/
-            $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
-            /*announce winner*/
-            console.log('blue wins');
-          }
-        }
-      } else if (boxIndex == 10) {
-        /*when not already present, add cell number to blue cells array*/
-        if (!blue10.includes(cellIndex)) {
-          blue10.push(cellIndex);
-          /*check whether this move wins the box*/
-          blueWins = isBlueWinner(blue10);
           if (blueWins == true) {
             /*block box with blue overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
@@ -194,9 +199,9 @@ $('.cell').click(function() {
       if (boxIndex == 2) {
         /*when not already present, add cell number to red cells array*/
         if (!red1.includes(cellIndex)) {
-          red2.push(cellIndex);
+          red1.push(cellIndex);
           /*check whether this move wins the box*/
-          redWins = isRedWinner(red2);
+          redWins = isRedWinner(red1);
 
           if (redWins == true) {
             /*block box with red overlay*/
@@ -206,6 +211,19 @@ $('.cell').click(function() {
           }
         }
       } else if (boxIndex == 3) {
+        /*when not already present, add cell number to red cells array*/
+        if (!red2.includes(cellIndex)) {
+          red2.push(cellIndex);
+          /*check whether this move wins the box*/
+          redWins = isRedWinner(red2);
+          if (redWins == true) {
+            /*block box with red overlay*/
+            $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+            /*announce winner*/
+            console.log('red wins');
+          }
+        }
+      } else if (boxIndex == 4) {
         /*when not already present, add cell number to red cells array*/
         if (!red3.includes(cellIndex)) {
           red3.push(cellIndex);
@@ -218,7 +236,7 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 4) {
+      } else if (boxIndex == 5) {
         /*when not already present, add cell number to red cells array*/
         if (!red4.includes(cellIndex)) {
           red4.push(cellIndex);
@@ -231,7 +249,7 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 5) {
+      } else if (boxIndex == 6) {
         /*when not already present, add cell number to red cells array*/
         if (!red5.includes(cellIndex)) {
           red5.push(cellIndex);
@@ -244,7 +262,7 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 6) {
+      } else if (boxIndex == 7) {
         /*when not already present, add cell number to red cells array*/
         if (!red6.includes(cellIndex)) {
           red6.push(cellIndex);
@@ -257,7 +275,7 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 7) {
+      } else if (boxIndex == 8) {
         /*when not already present, add cell number to red cells array*/
         if (!red7.includes(cellIndex)) {
           red7.push(cellIndex);
@@ -270,7 +288,7 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 8) {
+      } else if (boxIndex == 9) {
         /*when not already present, add cell number to red cells array*/
         if (!red8.includes(cellIndex)) {
           red8.push(cellIndex);
@@ -283,25 +301,12 @@ $('.cell').click(function() {
             console.log('red wins');
           }
         }
-      } else if (boxIndex == 9) {
+      } else if (boxIndex == 10) {
         /*when not already present, add cell number to red cells array*/
         if (!red9.includes(cellIndex)) {
           red9.push(cellIndex);
           /*check whether this move wins the box*/
           redWins = isRedWinner(red9);
-          if (redWins == true) {
-            /*block box with red overlay*/
-            $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
-            /*announce winner*/
-            console.log('red wins');
-          }
-        }
-      } else if (boxIndex == 10) {
-        /*when not already present, add cell number to red cells array*/
-        if (!red10.includes(cellIndex)) {
-          red10.push(cellIndex);
-          /*check whether this move wins the box*/
-          redWins = isRedWinner(red10);
           if (redWins == true) {
             /*block box with red overlay*/
             $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
@@ -315,7 +320,8 @@ $('.cell').click(function() {
       $('.player2').toggleClass('current');
       $('.player1').toggleClass('current');
 
-        /*if no player is active, starting player has not been picked => display alert*/
+
+    /*if no player is active, starting player has not been picked => display alert*/
     } else {
       alert('Choose starting player.')
     }
@@ -333,6 +339,15 @@ $('.cell').click(function() {
     //   /*announce winner*/
     //   console.log('red wins');
     // }
+  }
+
+  /*make it so that when you pick a box, the only playable gridbox for the next move is the one matching the box's index*/
+  var cellIndex = $(this).index();
+  if ($('.overlay').eq(cellIndex -1).hasClass('blue-overlay')||$('.overlay').eq(cellIndex -1).hasClass('red-overlay')) {
+    $('.overlay.gray-overlay:not(.blue-overlay):not(.red-overlay)').hide();
+  } else {
+    $('.overlay').show();
+    $('.overlay').eq(cellIndex - 1).hide();
   }
 })
 
