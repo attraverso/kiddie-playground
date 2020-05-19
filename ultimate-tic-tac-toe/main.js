@@ -1,128 +1,172 @@
 /*DNT*/$(document).ready(function() {/*DNT*/
 
-/*STEP generate game field via jQuery*/
 /*generate outer grid*/
 for (var i = 0; i < 9; i++) {
-  $('#game').append('<div class="gridbox"><div class="overlay gray-overlay"></div></div>');
+  $('#game').prepend('<div class="box"><div class="overlay gray-overlay"></div></div>');
 };
- /*generate innner grids*/
+
+/*generate innner grids*/
 for (var i = 0; i < 9; i++) {
-  $('.gridbox').append('<div class="box"></div>');
+ $('.box').prepend('<div class="cell"></div>');
 };
 
-/*STEP apply color by player*/
-
-/*clicking on player1 gives class current to player 1 and removes it from player 2*/
+/*clicking on player1 button gives class current to player 1*/
 $('.player1').click(function() {
-  $('button').removeClass('current');
   $(this).addClass('current');
 });
 
-/*clicking on player2 gives class current to player 2 and removes it from player 1*/
+/*clicking on player2 button gives class current to player 2*/
 $('.player2').click(function() {
-  $('button').removeClass('current');
   $(this).addClass('current');
 });
+
+$('.btn-info').click(function() {
+  $('#container').addClass('active');
+  $('.info').addClass('active');
+});
+
+$('.info-close').click(function() {
+  $('#container').removeClass('active');
+  $('.info').removeClass('active');
+});
+
+/** GLOBAL VARIABLES for winning conditions **/
+var blueMoves = [
+  [],[],[],[],[],[],[],[],[]
+];
+var redMoves = [
+  [],[],[],[],[],[],[],[],[]
+];
+var blueGlobal = [];
+var redGlobal = [];
+var blueWins;
+var redWins;
+
+/*alert when clicking on a previously won box*/
+// if(($(this).siblings('.overlay').hasClass('blue-overlay'))||($(this).siblings('.overlay').hasClass('red-overlay'))) {
+//      alert('This box was already won!')
 
 /*when clicking on whichever cell*/
-$('.box').click(function() {
-  /*if player1 is active, the cell becomes blue*/
-  if ($('.player1').hasClass('current')) {
-    $(this).addClass('blue');
-    /*if player1 is active, the cell becomes red*/
-  } else if ($('.player2').hasClass('current')) {
-    $(this).addClass('red');
+$('.cell').click(function() {
+
+  /*if the cell has already been claimed*/
+  if ($(this).hasClass('blue')||$(this).hasClass('red')){
+    /*display alert*/
+    alert('Someone has already claimed this cell!');
+    /*otherwise*/
+  } else {
+    /*grab current cell index*/
+    var cellIndex = $(this).index();
+    console.log('cell index: ' + cellIndex);
+    /*grab current box index*/
+    var boxIndex = $(this).parent().index();
+    console.log('box index: ' + boxIndex);
+    /*if player1 is active, the current cell becomes blue*/
+    if ($('.player1').hasClass('current')) {
+      $(this).addClass('blue');
+      var currentArray = blueMoves[boxIndex];
+      console.log(currentArray);
+      /*when not already present, add cell number to blue cells array*/
+      if (!currentArray.includes(cellIndex)) {
+        blueMoves[boxIndex].push(cellIndex);
+        console.log(blueMoves[boxIndex]);
+        /*check whether this move wins the box*/
+        blueWins = isWinner(currentArray);
+        if (blueWins == true) {
+          /*block box with blue overlay*/
+          $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+          blueGlobal.push(boxIndex);
+          blueWins = isWinner(blueGlobal);
+          if (blueWins == true) {
+            youWinGame(blueWins);
+          }
+          /*announce winner*/
+          console.log('blue wins');
+        }
+      }
+
+      /*switch player after move*/
+      $('.player1').toggleClass('current');
+      $('.player2').toggleClass('current');
+
+    /*if player2 is active, the current cell becomes red*/
+    } else if ($('.player2').hasClass('current')) {
+      $(this).addClass('red');
+      var currentArray = redMoves[boxIndex];
+      console.log(currentArray);
+      /*when not already present, add cell number to red cells array*/
+      if (!currentArray.includes(cellIndex)) {
+        redMoves[boxIndex].push(cellIndex);
+        console.log(redMoves[boxIndex]);
+        /*check whether this move wins the box*/
+        redWins = isWinner(currentArray);
+        if (redWins == true) {
+          /*block box with red overlay*/
+          $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+          redGlobal.push(boxIndex);
+          redWins = isWinner(redGlobal);
+          if (redWins == true) {
+            youWinGame(redWins);
+          }
+          /*announce winner*/
+          console.log('red wins');
+        }
+      }
+
+      /*switch player after move*/
+      $('.player1').toggleClass('current');
+      $('.player2').toggleClass('current');
+
+    /*if no player is active, starting player has not been picked => display alert*/
+    } else {
+      alert('Choose starting player.')
+    }
   }
-  /*gather the cell's index inside the inner grid*/
-  var boxIndex = $(this).index();
-  console.log(boxIndex);
-  $('.overlay').show();
-  $('.overlay').eq(boxIndex - 1).hide();
-});
 
-//make it so that one can't overwrite the other
+  if (($('.player1').hasClass('current') || $('.player2').hasClass('current')) && (!$(this).hasClass('blue') || !$(this).hasClass('red'))) {
+    var cellIndex = $(this).index();
+    /*if the cell you play redirects to a box that was already won, all boxes still up for grabs become playable*/
+    if ($('.overlay').eq(cellIndex).hasClass('blue-overlay')||$('.overlay').eq(cellIndex).hasClass('red-overlay')) {
+      $('.overlay.gray-overlay:not(.blue-overlay):not(.red-overlay)').hide();
+    } else {
+      /*make it so that when you pick a box, the only playable gridbox for the next move is the one matching the box's index*/
+      $('.overlay').show();
+      $('.overlay').eq(cellIndex).hide();
+    }
+  }
+})
 
-//make it so that when you pick a box, the only playable gridbox is the one corresponding
+/* * FUNCTIONS * */
 
+function isWinner(array) {
+  if((array.includes(0))&&(array.includes(1))&&(array.includes(2)) ||
+  (array.includes(3))&&(array.includes(4))&&(array.includes(5)) ||
+  (array.includes(6))&&(array.includes(7))&&(array.includes(8)) ||
+  (array.includes(0))&&(array.includes(3))&&(array.includes(6)) ||
+  (array.includes(1))&&(array.includes(4))&&(array.includes(7)) ||
+  (array.includes(2))&&(array.includes(5))&&(array.includes(8)) ||
+  (array.includes(0))&&(array.includes(4))&&(array.includes(8)) ||
+  (array.includes(2))&&(array.includes(4))&&(array.includes(6))) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
+function youWinGame(colorWins) {
+  if (colorWins == redWins) {
+    console.log('RED WINS GLOBAL');
+    $('.game-overlay').addClass('red-overlay').show();
+    /*announce winner*/
+    $('#winner h1').text('Red wins').show();
+    $('#winner').show();
+  } else if (colorWins == blueWins) {
+    console.log('RED WINS GLOBAL');
+    $('.game-overlay').addClass('blue-overlay').show();
+    /*announce winner*/
+    $('#winner h1').text('Blue wins').show();
+    $('#winner').show();
+  }
+}
 
-
-
-
-
-
-})/*DO NOT DELETE closing doc.ready*/
-
-
-
-/*SCRAPPED CODE FOR REFERENCE*/
-
-/*V1 : player 1 = click - player 2 = double click*/
-/*BB HAS ISSUES
--double clicked boxes have both color classes
--player1 boxes can be overridden by a double click */
-//
-// $('.box').click(function() {
-//   $(this).addClass('blue');
-// })
-//
-// $('.box').dblclick(function() {
-//   $(this).addClass('red');
-//   $(this).removeClass('blue');
-// })
-
-/*V2 : almost there, but had to reverse the condition and function*/
-
-// if ($('.player1').hasClass('current')) {
-//   $('.player1').click(function() {
-//     $(this).addClass('red');
-//   })
-// } else if ($('.player2').hasClass('current')) {
-//   $('.box').click(function() {
-//     $(this).addClass('red');
-//   })
-// };
-
-/*V3 : USE OF 'DATA'- failed, shall investigate in the future*/
-
-// $('.player2').click(function() {
-//   $(this).data('clicked', true);
-//   $(this).prev().data('clicked', false);
-// })
-//
-// if ($('.player2').data('clicked')) {
-//   $('.player2').addclass('blue');
-// }
-
-/*V4 : IDEK. Lessons learned: functions just do NOT work that way (and they can't easily return multiple values)*/
-
-// var player1 = true;
-// var player2 = false;
-//
-// $('.player1').click(function() {
-//   player1 = true;
-//   player2 = false;
-//   console.log('player 1 status = ' + player1);
-//   console.log('player 2 status = ' + player2);
-//   return player1;
-//   return player2;
-// });
-//
-// $('.player2').click(function() {
-//   player1 = false;
-//   player2 = true;
-//   console.log('player 1 status = ' + player1);
-//   console.log('player 2 status = ' + player2);
-//   return player1;
-//   return player2;
-// });
-
-// if (player1 == true) {
-//   $('.box').click(function() {
-//     $(this).addClass('blue');
-//   })
-// } else {
-//   $('.box').click(function() {
-//     $(this).addClass('red');
-//   })
-// }
+});/*DNT*/
