@@ -35,6 +35,10 @@ button {
   background-color: #00f;
 }
 
+.draw-overlay {
+  background-color: rgba(0,0,0,0.2);
+}
+
 .gray-overlay {
   background-color: rgba(0,0,0,0.2);
 }

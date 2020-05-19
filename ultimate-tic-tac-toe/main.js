@@ -42,6 +42,9 @@ var blueMoves = [
 var redMoves = [
   [],[],[],[],[],[],[],[],[]
 ];
+var boxLimit = [
+  [],[],[],[],[],[],[],[],[]
+];
 var blueGlobal = [];
 var redGlobal = [];
 var blueWins;
@@ -67,19 +70,22 @@ $('.cell').click(function() {
       $(this).addClass('blue');
       /*select the blue array which index matches the current box*/
       var currentArray = blueMoves[boxIndex];
-      /*if not already present, add cell index to the array*/
-      if (!currentArray.includes(cellIndex)) {
-        blueMoves[boxIndex].push(cellIndex);
-        console.log('current array = blue (index ' + boxIndex + ')');
-        console.log(blueMoves[boxIndex]);
-        /*check whether this move wins the box*/
-        blueWins = isWinner(currentArray);
-      }
+      /*add cell index to the array*/
+      blueMoves[boxIndex].push(cellIndex);
+      boxLimit[boxIndex].push(cellIndex);
+      console.log('current array = blue (index ' + boxIndex + ')');
+      console.log(blueMoves[boxIndex]);
+      console.log('current box limit array:');
+      console.log(boxLimit[boxIndex]);
+       var boxLimitCheck = boxLimit[boxIndex].length;
+      console.log('boxLimit length:' + boxLimitCheck);
+      /*check whether this move wins the box*/
+      blueWins = isWinner(currentArray);
       /*if blue wins*/
       if (blueWins == true) {
         console.log('BLUE WINS BOX');
         /*block box with blue overlay*/
-        $(this).siblings('.overlay').removeClass('grey-overlay').addClass('blue-overlay').show();
+        $(this).siblings('.overlay').removeClass('gray-overlay').addClass('blue-overlay').show();
         /*send box index to global array*/
         blueGlobal.push(boxIndex);
         /*check whether this box wins the game*/
@@ -102,19 +108,22 @@ $('.cell').click(function() {
       $(this).addClass('red');
       /*select the red array which index matches the current box*/
       var currentArray = redMoves[boxIndex];
-      /*if not already present, add cell index to the array*/
-      if (!currentArray.includes(cellIndex)) {
-        redMoves[boxIndex].push(cellIndex);
-        console.log('current array = red (index ' + boxIndex + ')');
-        console.log(redMoves[boxIndex]);
-        /*check whether this move wins the box*/
-        redWins = isWinner(currentArray);
-      }
+      /*add cell index to the array*/
+      redMoves[boxIndex].push(cellIndex);
+      boxLimit[boxIndex].push(cellIndex);
+      console.log('current array = red (index ' + boxIndex + ')');
+      console.log(redMoves[boxIndex]);
+      console.log('current box limit array:');
+      console.log(boxLimit[boxIndex]);
+       var boxLimitCheck = boxLimit[boxIndex].length;
+      console.log('boxLimit length:' + boxLimitCheck);
+      /*check whether this move wins the box*/
+      redWins = isWinner(currentArray);
       /*if red wins*/
       if (redWins == true) {
         console.log('RED WINS BOX');
         /*block box with red overlay*/
-        $(this).siblings('.overlay').removeClass('grey-overlay').addClass('red-overlay').show();
+        $(this).siblings('.overlay').removeClass('gray-overlay').addClass('red-overlay').show();
         /*send box index to global array*/
         redGlobal.push(boxIndex);
         /*check whether this box wins the game*/
@@ -135,14 +144,18 @@ $('.cell').click(function() {
     } else {
       alert('Choose starting player.')
     }
+    /*if this move claims the last cell in a box => block box*/
+    if ((boxLimit[boxIndex].length) == 9) {
+      $(this).siblings('.overlay').removeClass('gray-overlay').addClass('draw-overlay').show();
+    }
   }
 
   /** DYNAMIC OVERLAYS **/
   /*if there's already an active player AND the cell you picked wasn't already claimed*/
   if (($('.player1').hasClass('current') || $('.player2').hasClass('current')) && (!$(this).hasClass('blue') || !$(this).hasClass('red'))) {
-    var cellIndex = $(this).index();
-    /*if the cell you play redirects to a box that was already won, all the boxes that are still up for grabs become playable*/
-    if ($('.overlay').eq(cellIndex).hasClass('blue-overlay')||$('.overlay').eq(cellIndex).hasClass('red-overlay')) {
+    // var cellIndex = $(this).index();
+    /*if the cell you play redirects to a box that has already been won or ended in a draw, all the boxes that are still up for grabs become playable*/
+    if ($('.overlay').eq(cellIndex).hasClass('blue-overlay')||$('.overlay').eq(cellIndex).hasClass('red-overlay')||(boxLimit[cellIndex].length) == 9) {
       $('.overlay.gray-overlay:not(.blue-overlay):not(.red-overlay)').hide();
     } else {
       /*make it so that when you pick a cell, the only playable box for the next move is the one matching the current cell's index*/
