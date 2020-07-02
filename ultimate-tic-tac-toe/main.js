@@ -1,3 +1,5 @@
+/*KNOWN ISSUES : if a box is won by claiming the very last cell, the box gets added twice to the globalLimit array*/
+
 $(document).ready(function() {/*DNT*/
 
 /** GENERATE GAMEFIELD **/
@@ -47,8 +49,9 @@ var boxLimit = [
 ];
 var blueGlobal = [];
 var redGlobal = [];
-var blueWins;
-var redWins;
+var globalLimit = [];
+var blueWinsGame = false;
+var redWinsGame = false;
 
 /** GAME MECHANICS **/
 /*when clicking on whichever cell*/
@@ -61,10 +64,8 @@ $('.cell').click(function() {
   } else {
     /*grab current cell index*/
     var cellIndex = $(this).index();
-    console.log('cell index: ' + cellIndex);
     /*grab current box index*/
     var boxIndex = $(this).parent().index();
-    console.log('box index: ' + boxIndex);
     /*if player1 is active, the current cell becomes blue*/
     if ($('.player1').hasClass('current')) {
       $(this).addClass('blue');
@@ -73,30 +74,32 @@ $('.cell').click(function() {
       /*add cell index to the array*/
       blueMoves[boxIndex].push(cellIndex);
       boxLimit[boxIndex].push(cellIndex);
-      console.log('current array = blue (index ' + boxIndex + ')');
-      console.log(blueMoves[boxIndex]);
-      console.log('current box limit array:');
-      console.log(boxLimit[boxIndex]);
        var boxLimitCheck = boxLimit[boxIndex].length;
-      console.log('boxLimit length:' + boxLimitCheck);
       /*check whether this move wins the box*/
-      blueWins = isWinner(currentArray);
+      let blueWinsBox = isWinner(currentArray);
       /*if blue wins*/
-      if (blueWins == true) {
+      if (blueWinsBox == true) {
         console.log('BLUE WINS BOX');
         /*block box with blue overlay*/
         $(this).siblings('.overlay').removeClass('gray-overlay').addClass('blue-overlay').show();
         /*send box index to global array*/
         blueGlobal.push(boxIndex);
+        console.log('blueglobal: ' + blueGlobal);
+        globalLimit.push('globalLimit: ' + boxIndex);
         /*check whether this box wins the game*/
-        blueWins = isWinner(blueGlobal);
+        var blueWinsGame = isWinner(blueGlobal);
+        console.log('bluewinsgame: ' + blueWinsGame);
+        /*check whether this box marks a draw*/
+      } else if (blueWinsBox == false && (boxLimit[boxIndex].length) == 9) {
+        isBoxDraw(boxIndex, this, globalLimit);
       }
-      /* the following condition looks identical to the one before, but while the first time blueWins was the result of the isWinner function applied to the array of a box, now it contains the result of isWinner applied to the GLOBAL array*/
       /*if true, celebrate*/
-      if (blueWins == true) {
-        console.log('blue wins');
-        youWin(blueWins);
+      if (blueWinsGame === true) {
+        console.log('BLUE WINS GAME');
+        youWin('blue');
       }
+      console.log('blueWinsGlobal right before isGameDraw is called: ' + blueWinsGame);
+      isGameDraw(blueWinsGame);
 
       /*switch player after move*/
       $('.player1').toggleClass('current');
@@ -111,30 +114,38 @@ $('.cell').click(function() {
       /*add cell index to the array*/
       redMoves[boxIndex].push(cellIndex);
       boxLimit[boxIndex].push(cellIndex);
-      console.log('current array = red (index ' + boxIndex + ')');
-      console.log(redMoves[boxIndex]);
-      console.log('current box limit array:');
-      console.log(boxLimit[boxIndex]);
+      // console.log('current array = red (index ' + boxIndex + ')');
+      // console.log(redMoves[boxIndex]);
+      // console.log('current box limit array:');
+      // console.log(boxLimit[boxIndex]);
        var boxLimitCheck = boxLimit[boxIndex].length;
-      console.log('boxLimit length:' + boxLimitCheck);
+      // console.log('boxLimit length:' + boxLimitCheck);
       /*check whether this move wins the box*/
-      redWins = isWinner(currentArray);
+      let redWinsBox = isWinner(currentArray);
       /*if red wins*/
-      if (redWins == true) {
+      if (redWinsBox == true) {
         console.log('RED WINS BOX');
         /*block box with red overlay*/
         $(this).siblings('.overlay').removeClass('gray-overlay').addClass('red-overlay').show();
         /*send box index to global array*/
         redGlobal.push(boxIndex);
+        console.log('redglobal ' + redGlobal);
+        globalLimit.push(boxIndex);
         /*check whether this box wins the game*/
-        redWins = isWinner(redGlobal);
+        redWinsGame = isWinner(redGlobal);
+        console.log('redwinsgame: ' + redWinsGame);
+        /*check whether this box marks a draw*/
+
+      } else if (redWinsBox == false && (boxLimit[boxIndex].length) == 9) {
+        isBoxDraw(boxIndex, this, globalLimit);
       }
-      /* the following condition looks identical to the one before, but while the first time blueWins was the result of the isWinner function applied to the array of a box, now it contains the result of isWinner applied to the GLOBAL array*/
       /*if true, celebrate*/
-      if (redWins == true) {
-        console.log('red wins')
-        youWin(redWins);
+      if (redWinsGame == true) {
+        console.log('RED WINS GAME')
+        youWin('red');
       }
+
+      isGameDraw(redWinsGame);
 
       /*switch player after move*/
       $('.player1').toggleClass('current');
@@ -144,11 +155,15 @@ $('.cell').click(function() {
     } else {
       alert('Choose starting player.')
     }
-    /*if this move claims the last cell in a box => block box*/
-    if ((boxLimit[boxIndex].length) == 9) {
-      $(this).siblings('.overlay').removeClass('gray-overlay').addClass('draw-overlay').show();
-    }
-  }
+    // /*if this move claims the last cell in a box => block box*/
+    // if ((boxLimit[boxIndex].length) == 9) {
+    //   console.log('box is a draw');
+    //   $(this).siblings('.overlay').removeClass('gray-overlay').addClass('draw-overlay').show();
+    //   globalLimit.push(boxIndex);
+    //   isGameDraw(globalLimit);
+    // }
+    // isBoxDraw(boxIndex, this, redWinsBox);
+  } /*else close - */
 
   /** DYNAMIC OVERLAYS **/
   /*if there's already an active player AND the cell you picked wasn't already claimed*/
@@ -167,6 +182,29 @@ $('.cell').click(function() {
 
 /* * FUNCTIONS * */
 
+/* check whether a move completes a box without it being won by anyone */
+function isBoxDraw(boxIndex, element, globalArray) /*element = this*/{
+    console.log('box is a draw');
+    $(element).siblings('.overlay').removeClass('gray-overlay').addClass('draw-overlay').show();
+    globalArray.push(boxIndex);
+    console.log(globalArray);
+    isGameDraw(globalArray);
+}
+
+/* check whether this move wins the game */
+function isGameDraw(winStatus) {
+  if (winStatus == false && globalLimit.length == 9) {
+    console.log('winstatus inside isgamedraw: ' + winStatus);
+    console.log('globalLim inside isgamedraw: ' + globalLimit);
+    console.log("the game is a draw");
+    /*block the whole gamefield with blue overlay*/
+    $('.game-overlay').addClass('draw-overlay').show();
+    /*announce winner*/
+    $('#winner h1').text("It's a draw!").show();
+    $('#winner').show();
+  }
+}
+
 /*check whether the numbers in the array match winning conditions*/
 function isWinner(array) {
   if((array.includes(0))&&(array.includes(1))&&(array.includes(2)) ||
@@ -183,17 +221,15 @@ function isWinner(array) {
   }
 }
 
-/*if someone wins the game, block the gamefield and display winner banner*/
-function youWin(colorWins) {
-  if (colorWins == redWins) {
-    console.log('RED WINS GAME');
+/*if someone has won the game (this was already verified elsewhere), block the gamefield and display winner banner*/
+function youWin(color) {
+  if (color == 'red') {
     /*block the whole gamefield with red overlay*/
     $('.game-overlay').addClass('red-overlay').show();
     /*announce winner*/
     $('#winner h1').text('Red wins').show();
     $('#winner').show();
-  } else if (colorWins == blueWins) {
-    console.log('BLUE WINS GAME');
+  } else if (color == 'blue') {
     /*block the whole gamefield with blue overlay*/
     $('.game-overlay').addClass('blue-overlay').show();
     /*announce winner*/
